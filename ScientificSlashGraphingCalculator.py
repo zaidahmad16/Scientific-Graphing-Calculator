@@ -1,46 +1,51 @@
 #importing all important libraries
 import tkinter as tk
-import random
 import tkinter.messagebox
 import math
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-#Setting up base design
+# Create the main window for the scientific calculator
 window = tk.Tk()
 window. geometry("1185x568+0+0")
 window.resizable(width=False, height=False)
 window.title('Scientific Calculator')
 window.configure(background = 'black')
 
+# Create a frame within the window to hold the calculator widgets
 calc = tk.Frame(window)
 calc.grid()
 
+# Create the graphing calculator window
 graphCal = tk.Tk()
 graphCal. geometry("500x568+0+0")
 graphCal.title("Graphing Calculator")
 graphCal.configure(background = 'grey10')
 
+# Create an entry field for input in the graphing calculator
 entry = tk.Entry(graphCal)
 entry.pack()
 
+
+# Create a label for displaying error messages in the graphing calculator
 error_label = tk.Label(graphCal, text="")
 error_label.pack()
 
-default_color = 'blue'
+# Set the default color for plotting graphs
+default_color = 'red'
 
-#global default_color,error_label,entry
-
+# Define a function to switch to the graphing calculator window
 def switch_to_graphing():
   window.withdraw()
   graphCal.deiconify()
-  
+
+# Define a function to switch to the scientific calculator window
 def switch_to_scientific():
   graphCal.withdraw()
   window.deiconify()
 
-
+# Define a function to plot a graph based on the entered function
 def plot_graph():
     function = entry.get()
     x = np.linspace(-10, 10, 400)
@@ -56,25 +61,26 @@ def plot_graph():
     except Exception as e:
         error_label.config(text="Error: " + str(e))
 
-
+# Set the default color for graph plots
 color_var = default_color
 
-    
+# Define a function to add characters to the expression in the graphing calculator entry field    
 def add_to_expression(char):
     if char == 'x':
         entry.insert(tk.END, char)  # Add 'x' as a variable
     elif char == 'sin':
-        entry.insert(tk.END, 'np.sin(')
+        entry.insert(tk.END, 'np.sin(') # Add 'np.sin(' for the sin function
     elif char == 'cos':
-        entry.insert(tk.END, 'np.cos(')
+        entry.insert(tk.END, 'np.cos(') # Add 'np.cos(' for the cos function
     else:
         entry.insert(tk.END, char)
 
+# Define a function to clear the expression in the graphing calculator entry field
 def clear_expression():
     # Clear the expression in the entry box
     entry.delete(0, tk.END)
 
-
+# Create a class for the scientific calculator
 class Calc():
   def __init__(self):
     self.total = 0
@@ -124,6 +130,7 @@ class Calc():
   def clear_all(self):
     self.clear_function()
     self.total = '0'
+                
     
   #Function to perform basic arithmetic operations
   def basic_functions(self):
@@ -250,7 +257,7 @@ class Calc():
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
 
-  #
+  #Calculate Hyperbolic Sine in Radians
   def SineH(self):
     try:
       self.result = False
@@ -258,8 +265,8 @@ class Calc():
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-
-      
+  
+  #Calculate Hyperbolic Cosine in Radians
   def CosineH(self):
     try:
       self.result = False
@@ -267,7 +274,8 @@ class Calc():
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-    
+
+  #Calculate Hyperbolic Tangent in Radians
   def TangentH(self):
     try:
       self.result = False
@@ -275,7 +283,8 @@ class Calc():
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-    
+
+  #Convert Input value from radians to degrees
   def degrees(self):
     try:
       self.result = False
@@ -283,7 +292,8 @@ class Calc():
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-    
+
+  #Set the current value to Eueler's number (e)
   def E(self):
     try:
       self.result = False
@@ -291,7 +301,8 @@ class Calc():
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-    
+
+  #Set the current value to Tau (2*pi)
   def Pi_2(self):
     try:
       self.result = False
@@ -299,7 +310,8 @@ class Calc():
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-    
+
+  #Calculate the logarithm base 2 of the input value
   def log_2(self):
     try:
       self.result = False
@@ -307,23 +319,26 @@ class Calc():
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-    
-  def log_10(self):
+
+  #Calculate power of two of the input value
+  def power_two(self):
     try:
       self.result = False
-      self.current = math.log10(float(txtDisplay.get()))
-      self.display(self.current)
-    except Exception:
-        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-      
-  def log1p(self):
-    try:
-      self.result = False
-      self.current = math.log1p(float(txtDisplay.get()))
+      self.current = float(txtDisplay.get())**2
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
 
+  #Calculate the logarithm of (1 + x) for the input value
+  def powerThree(self):
+    try:
+      self.result = False
+      self.current = float(txtDisplay.get())**3
+      self.display(self.current)
+    except Exception:
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
+
+  #Calculate the exponential minus 1 of the input value
   def expm1(self):
     try:
       self.result = False
@@ -331,7 +346,8 @@ class Calc():
       self.display(self.current)
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
-    
+  
+  #Calculate the natural logarithm of the absolute value of the Gamma  
   def gamma(self):
     try:
       self.result = False
@@ -340,9 +356,10 @@ class Calc():
     except Exception:
         tkinter.messagebox.showerror("Value Error", "Check your values and operators")
       
-
+#Create an instance of the calculator
 cal_app = Calc()
 
+#Create a text entry field for display
 txtDisplay = tk.Entry(calc,font = ('Lato',20,'bold'),bg='black',fg='white',justify=tk.RIGHT, bd=30,width=28)
 txtDisplay.grid(row = 0, column = 0,columnspan = 4, pady = 1)
 txtDisplay.insert(0,"0")
@@ -364,67 +381,67 @@ for j in range(2,5):
     i+=1
 
 # Just the visuals for multiple buttons
-add_button = tk.Button(calc,text="+",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="white", bg="#FF9500",command=lambda:cal_app.operation("add")).grid(row=1, column= 3, pady = 1)
+add_button = tk.Button(calc,text="+",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="white", bg="#FF9500",command=lambda:cal_app.operation("add")).grid(row=1, column= 3, pady = 1)
 
-sub_button = tk.Button(calc,text="-",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="white", bg="#FF9500",command=lambda:cal_app.operation("sub")).grid(row=2, column= 3, pady = 1)
+sub_button = tk.Button(calc,text="-",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="white", bg="#FF9500",command=lambda:cal_app.operation("sub")).grid(row=2, column= 3, pady = 1)
 
-multi_button = tk.Button(calc,text="x",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="white",bg="#FF9500",command=lambda:cal_app.operation("multi")).grid(row=3, column= 3, pady = 1)
+multi_button = tk.Button(calc,text="x",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="white",bg="#FF9500",command=lambda:cal_app.operation("multi")).grid(row=3, column= 3, pady = 1)
 
-divde_button = tk.Button(calc,text="÷",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="white", bg="#FF9500",command=lambda:cal_app.operation("divide")).grid(row=4, column= 3, pady = 1)
+divde_button = tk.Button(calc,text="÷",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="white", bg="#FF9500",command=lambda:cal_app.operation("divide")).grid(row=4, column= 3, pady = 1)
 
-mod_button = tk.Button(calc,text="%",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=lambda:cal_app.operation("mod")).grid(row=3, column= 6, pady = 1)
+mod_button = tk.Button(calc,text="Mod",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=lambda:cal_app.operation("mod")).grid(row=3, column= 6, pady = 1)
 
-clear_button = tk.Button(calc,text="C",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.clear_function).grid(row=1, column=0, pady = 1)
+clear_button = tk.Button(calc,text="C",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.clear_function).grid(row=1, column=0, pady = 1)
 
-all_clear_button = tk.Button(calc,text="CE",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.clear_all).grid(row=1, column= 1, pady = 1)
+all_clear_button = tk.Button(calc,text="CE",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.clear_all).grid(row=1, column= 1, pady = 1)
 
-dot_button = tk.Button(calc,text=".",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="white", bg="#505050",command=lambda:cal_app.NumberPressed(".")).grid(row=5, column= 1, pady = 1)
+dot_button = tk.Button(calc,text=".",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="white", bg="#505050",command=lambda:cal_app.NumberPressed(".")).grid(row=5, column= 1, pady = 1)
 
-zero_button = tk.Button(calc,text="0",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="white", bg="#505050",command=lambda:cal_app.NumberPressed(0)).grid(row=5, column= 0, pady = 1)
+zero_button = tk.Button(calc,text="0",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="white", bg="#505050",command=lambda:cal_app.NumberPressed(0)).grid(row=5, column= 0, pady = 1)
 
-equal_button =  tk.Button(calc,text="=",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="white", bg="#FF9500",command=cal_app.sum_total).grid(row=5, column= 3, pady = 1)
+equal_button =  tk.Button(calc,text="=",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="white", bg="#FF9500",command=cal_app.sum_total).grid(row=5, column= 3, pady = 1)
 
-PM_button = tk.Button(calc,text=chr(177),width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="white", bg="#505050",command=cal_app.PM_Pressed).grid(row=5, column=2, pady = 1)
+PM_button = tk.Button(calc,text=chr(177),width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="white", bg="#505050",command=cal_app.PM_Pressed).grid(row=5, column=2, pady = 1)
 
-root_button = tk.Button(calc,text="\u221A",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.squared).grid(row=1, column= 2, pady = 1)
+root_button = tk.Button(calc,text="\u221A",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.squared).grid(row=1, column= 2, pady = 1)
 
-sin_button =  tk.Button(calc,text="Sin",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.sinPressed).grid(row=1, column= 7, pady = 1)
+sin_button =  tk.Button(calc,text="Sin",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.sinPressed).grid(row=1, column= 7, pady = 1)
 
-cos_button =  tk.Button(calc,text="Cos",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.cosinePressed).grid(row=1, column= 5, pady = 1)
+cos_button =  tk.Button(calc,text="Cos",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.cosinePressed).grid(row=1, column= 5, pady = 1)
 
-tan_button =  tk.Button(calc,text="Tan",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.tangentPressed).grid(row=1, column= 6, pady = 1)
+tan_button =  tk.Button(calc,text="Tan",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.tangentPressed).grid(row=1, column= 6, pady = 1)
 
-asinh_button =  tk.Button(calc,text="asinh",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.inverseSinPressed).grid(row=5, column= 7, pady = 1)
+asinh_button =  tk.Button(calc,text="asinh",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.inverseSinPressed).grid(row=5, column= 7, pady = 1)
 
-acosh_button = tk.Button(calc,text="acosh",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.inverseCosinePressed).grid(row=5, column= 6, pady = 1)
+acosh_button = tk.Button(calc,text="acosh",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.inverseCosinePressed).grid(row=5, column= 6, pady = 1)
 
-exponents_button = tk.Button(calc,text="exp",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.exponents).grid(row=3, column= 5, pady = 1)
+exponents_button = tk.Button(calc,text="exp",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.exponents).grid(row=3, column= 5, pady = 1)
 
-logarithm_button = tk.Button(calc,text="Log",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.logarithm).grid(row=3, column= 4, pady = 1)
+logarithm_button = tk.Button(calc,text="Log",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.logarithm).grid(row=3, column= 4, pady = 1)
 
-pi_button = tk.Button(calc,text="π",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.pi).grid(row=1, column= 4, pady = 1)
+pi_button = tk.Button(calc,text="π",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.pi).grid(row=1, column= 4, pady = 1)
 
-SineH_button = tk.Button(calc,text="SineH",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.SineH).grid(row=2, column= 7, pady = 1)
+SineH_button = tk.Button(calc,text="SineH",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.SineH).grid(row=2, column= 7, pady = 1)
 
-CosineH_button = tk.Button(calc,text="cosH",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.CosineH).grid(row=2, column= 5, pady = 1)
+CosineH_button = tk.Button(calc,text="cosH",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.CosineH).grid(row=2, column= 5, pady = 1)
 
-TanH_button = tk.Button(calc,text="TanH",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.TangentH).grid(row=2, column= 6, pady = 1)
+TanH_button = tk.Button(calc,text="TanH",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.TangentH).grid(row=2, column= 6, pady = 1)
 
-degree_button = tk.Button(calc,text="Deg",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.degrees).grid(row=5, column=5, pady = 1)
+degree_button = tk.Button(calc,text="Deg",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.degrees).grid(row=5, column=5, pady = 1)
 
-E_button = tk.Button(calc,text="E",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.E).grid(row=3, column= 7, pady = 1)
+E_button = tk.Button(calc,text="E",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.E).grid(row=3, column= 7, pady = 1)
 
-Pi2_button = tk.Button(calc,text="pi2",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.Pi_2).grid(row=2, column= 4, pady = 1)
+Pi2_button = tk.Button(calc,text="pi2",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.Pi_2).grid(row=2, column= 4, pady = 1)
 
-log2_button = tk.Button(calc,text="log2",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.log_2).grid(row=5, column= 4, pady = 1)
+log2_button = tk.Button(calc,text="log2",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.log_2).grid(row=5, column= 4, pady = 1)
 
-log10_button = tk.Button(calc,text="Log10",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.log_10).grid(row=4, column= 4, pady = 1)
+powerTwo_button = tk.Button(calc,text="x²",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.power_two).grid(row=4, column= 4, pady = 1)
 
-log1p_button = tk.Button(calc,text="Log1p",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.log1p).grid(row=4, column= 5, pady = 1)
+powerThree_button = tk.Button(calc,text="x³ ",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.powerThree).grid(row=4, column= 5, pady = 1)
 
-expm1_button = tk.Button(calc,text="Expm1",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.expm1).grid(row=4, column= 6, pady = 1)
+expm1_button = tk.Button(calc,text="Expm1",width= 6,height= 2,font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2",command=cal_app.expm1).grid(row=4, column= 6, pady = 1)
 
-gamma_button = tk.Button(calc,text="Gamma",width=6,height= 2,font=("Lato",20,'bold'), bd=4, fg="black", bg="#D4D4D2",command=cal_app.gamma).grid(row=4, column= 7, pady = 1)
+gamma_button = tk.Button(calc, text="Gamma", width= 6, height=2, font=("Lato",20,'bold'), bd= 4, fg="black", bg="#D4D4D2", command=cal_app.gamma).grid(row=4, column= 7, pady = 1)
 
 
 
@@ -492,20 +509,24 @@ plot_button.pack()
 
 #-------------------------------------------------------------------------------------------------------
 
+#Exit function
 def iExit():
   exit =  tkinter.messagebox.askyesno("Scientific Calculator","Do you want to exit ?")
   if exit>0:
+    #What actually kills the program
     window.destroy()
 
+#Create a menu bar for the calculator
 menuBar  = tk.Menu(calc)
 
+#Create a file menu in the menu bar
 fileMenu = tk.Menu(menuBar,tearoff = 0)
 menuBar.add_cascade(label = 'Mode', menu = fileMenu)
 fileMenu.add_command(label = "Exit", command = iExit)
 fileMenu.add_separator()
 fileMenu.add_command(label = "Graphing Calculator", command =switch_to_graphing)
 
-
+#Create an edit menu in the menu bar
 editMenu = tk.Menu(menuBar,tearoff = 0)
 menuBar.add_cascade(label = 'Edit', menu = editMenu)
 editMenu.add_command(label = "Cut")
@@ -513,7 +534,8 @@ editMenu.add_command(label = "Copy")
 editMenu.add_separator()
 editMenu.add_command(label = "Paste")
 
+#Configure the window to use the menu bar
 window.config(menu=menuBar)
 
-graphCal.mainloop()
-window.mainloop()
+graphCal.mainloop() #Start the main loop for graphing calculator
+window.mainloop() #Start the main loop for the scientific calculator
