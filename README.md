@@ -1,2 +1,2 @@
 # Scientific-Graphing-Calculator
-This a scientific/graphing calculator that i made in python. To switch between them you have to click the 'mode ' buttion on the top bar menu.
+This a scientific/graphing calculator that I made in python for my grade 11 computer science class. To switch between the graphing and scientific you have to click the 'mode ' buttion on the top bar menu.
